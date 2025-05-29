@@ -1,0 +1,10 @@
+[
+    {
+        "id": 1,
+        "nombre": "Test User",
+        "correo": "test@example.com",
+        "password": "$2y$10$EIEz3sL7cbg6kvUG76YRYewhoyDnzCvmEQCt1rHI00ENQ6QSKpVu2",
+        "tipo_usuario": "cliente",
+        "fecha_registro": "2025-05-29 20:55:47"
+    }
+]
