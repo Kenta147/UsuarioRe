@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registro de Usuario</title>
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+      * {
+        font-family: "Inter", sans-serif;
+      }
+
+      .gradient-bg {
+        background: linear-gradient(135deg, #4f46e5 0%, #8b5cf6 100%);
+      }
+
+      .glass-effect {
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      }
+
+      .input-focus {
+        transition: all 0.3s ease;
+      }
+
+      .input-focus:focus {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 20px rgba(79, 70, 229, 0.3);
+        border-color: rgba(199, 210, 254, 0.8);
+      }
+
+      .btn-hover {
+        transition: all 0.3s ease;
+      }
+
+      .btn-hover:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(79, 70, 229, 0.4);
+      }
+
+      .shake {
+        animation: shake 0.5s ease-in-out;
+      }
+
+      @keyframes shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-5px);
+        }
+        75% {
+          transform: translateX(5px);
+        }
+      }
+
+      .fade-in {
+        animation: fadeIn 0.5s ease-in;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .success-animation {
+        animation: successPulse 0.6s ease-in-out;
+      }
+
+      @keyframes successPulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      /* Nuevos estilos añadidos */
+      .nav-link {
+        position: relative;
+        padding-bottom: 2px;
+      }
+
+      .nav-link:after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: white;
+        transition: width 0.3s ease;
+      }
+
+      .nav-link:hover:after {
+        width: 100%;
+      }
+
+      .user-icon-container {
+        background: rgba(255, 255, 255, 0.15);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .select-arrow {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right 0.5rem center;
+        background-repeat: no-repeat;
+        background-size: 1.5em 1.5em;
+      }
+    </style>
+  </head>
+  <body class="gradient-bg min-h-screen flex items-center justify-center p-4">
+    <header class="absolute top-0 left-0 right-0 p-6">
+      <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <h1 class="text-white text-2xl font-bold">Mi App</h1>
+        <nav class="flex items-center space-x-6">
+          <a
+            href="#"
+            class="text-white/80 hover:text-white transition-colors nav-link"
+            >Inicio</a
+          >
+          <a
+            href="#"
+            class="text-white/80 hover:text-white transition-colors nav-link"
+            >Login</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <section class="w-full max-w-md mx-4">
+      <div class="glass-effect rounded-2xl p-8 shadow-2xl fade-in">
+        <div class="text-center mb-8">
+          <div
+            class="user-icon-container w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4"
+          >
+            <svg
+              class="w-10 h-10 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+              ></path>
+            </svg>
+          </div>
+          <h2 class="text-3xl font-bold text-white mb-2">Crear Cuenta</h2>
+          <p class="text-white/80 text-sm">Únete a nuestra comunidad</p>
+        </div>
+
+        <form id="registroForm" novalidate>
+          <div class="space-y-5">
+            <div>
+              <label
+                for="nombre"
+                class="block text-white/90 text-sm font-medium mb-2"
+                >Nombre Completo</label
+              >
+              <input
+                type="text"
+                id="nombre"
+                name="nombre"
+                class="input-focus w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:border-white/50"
+                placeholder="Ingresa tu nombre completo"
+              />
+              <div
+                id="nombre-error"
+                class="error-message text-red-300 text-sm mt-1 hidden"
+              ></div>
+            </div>
+
+            <div>
+              <label
+                for="correo"
+                class="block text-white/90 text-sm font-medium mb-2"
+                >Correo Electrónico</label
+              >
+              <input
+                type="email"
+                id="correo"
+                name="correo"
+                class="input-focus w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:border-white/50"
+                placeholder="ejemplo@correo.com"
+              />
+              <div
+                id="correo-error"
+                class="error-message text-red-300 text-sm mt-1 hidden"
+              ></div>
+            </div>
+
+            <div>
+              <label
+                for="password"
+                class="block text-white/90 text-sm font-medium mb-2"
+                >Contraseña</label
+              >
+              <div class="relative">
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  class="input-focus w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:border-white/50 pr-12"
+                  placeholder="Mínimo 8 caracteres"
+                />
+                <button
+                  type="button"
+                  id="togglePassword"
+                  class="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/60 hover:text-white transition-colors"
+                >
+                  <svg
+                    class="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                    ></path>
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+              <div
+                id="password-error"
+                class="error-message text-red-300 text-sm mt-1 hidden"
+              ></div>
+            </div>
+
+            <div>
+              <label
+                for="confirmPassword"
+                class="block text-white/90 text-sm font-medium mb-2"
+                >Repetir Contraseña</label
+              >
+              <input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                class="input-focus w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:border-white/50"
+                placeholder="Confirma tu contraseña"
+              />
+              <div
+                id="confirmPassword-error"
+                class="error-message text-red-300 text-sm mt-1 hidden"
+              ></div>
+            </div>
+
+            <div>
+              <label
+                for="tipoUsuario"
+                class="block text-white/90 text-sm font-medium mb-2"
+                >Tipo de Usuario</label
+              >
+              <select
+                id="tipoUsuario"
+                name="tipoUsuario"
+                class="input-focus select-arrow w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-white/50 appearance-none"
+              >
+                <option value="" class="text-gray-800">
+                  Selecciona un tipo
+                </option>
+                <option value="cliente" class="text-gray-800">Cliente</option>
+                <option value="proveedor" class="text-gray-800">
+                  Proveedor
+                </option>
+                <option value="administrador" class="text-gray-800">
+                  Administrador
+                </option>
+              </select>
+              <div
+                id="tipoUsuario-error"
+                class="error-message text-red-300 text-sm mt-1 hidden"
+              ></div>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            id="submitBtn"
+            class="btn-hover w-full mt-8 bg-white text-indigo-600 font-semibold py-3 rounded-lg transition-all duration-300 hover:bg-white/90 focus:outline-none focus:ring-2 focus:ring-white/50"
+          >
+            <span id="btnText">Crear Cuenta</span>
+            <span id="btnLoader" class="hidden">
+              <svg
+                class="animate-spin -ml-1 mr-3 h-5 w-5 text-indigo-600 inline"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  class="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"
+                ></circle>
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+              Procesando...
+            </span>
+          </button>
+        </form>
+
+        <!-- Mensaje de éxito -->
+        <div
+          id="successMessage"
+          class="hidden mt-6 p-4 bg-green-500/20 border border-green-400/30 rounded-lg backdrop-blur-sm"
+        >
+          <div class="flex items-center">
+            <svg
+              class="w-5 h-5 text-green-400 mr-2"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              ></path>
+            </svg>
+            <span class="text-green-100 font-medium"
+              >¡Registro exitoso! Bienvenido a nuestra plataforma.</span
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="absolute bottom-0 left-0 right-0 p-6">
+      <div class="max-w-7xl mx-auto text-center">
+        <p class="text-white/60 text-sm">
+          © 2024 Mi App. Todos los derechos reservados.
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      // Toggle password visibility
+      document
+        .getElementById("togglePassword")
+        .addEventListener("click", function () {
+          const password = document.getElementById("password");
+          const type =
+            password.getAttribute("type") === "password" ? "text" : "password";
+          password.setAttribute("type", type);
+
+          // Cambiar el icono según el estado
+          const icon = this.querySelector("svg");
+          if (type === "text") {
+            icon.innerHTML =
+              '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>';
+          } else {
+            icon.innerHTML =
+              '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>';
+          }
+        });
+
+      // Validation functions
+      function validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+      }
+
+      function showError(fieldId, message) {
+        const errorDiv = document.getElementById(fieldId + "-error");
+        const field = document.getElementById(fieldId);
+
+        errorDiv.textContent = message;
+        errorDiv.classList.remove("hidden");
+        field.classList.add("border-red-400", "shake");
+
+        setTimeout(() => {
+          field.classList.remove("shake");
+        }, 500);
+      }
+
+      function hideError(fieldId) {
+        const errorDiv = document.getElementById(fieldId + "-error");
+        const field = document.getElementById(fieldId);
+
+        errorDiv.classList.add("hidden");
+        field.classList.remove("border-red-400");
+      }
+
+      function validateForm() {
+        let isValid = true;
+
+        // Reset all errors
+        [
+          "nombre",
+          "correo",
+          "password",
+          "confirmPassword",
+          "tipoUsuario",
+        ].forEach((field) => {
+          hideError(field);
+        });
+
+        // Validate nombre
+        const nombre = document.getElementById("nombre").value.trim();
+        if (!nombre) {
+          showError("nombre", "El nombre es obligatorio");
+          isValid = false;
+        } else if (nombre.length < 2) {
+          showError("nombre", "El nombre debe tener al menos 2 caracteres");
+          isValid = false;
+        }
+
+        // Validate correo
+        const correo = document.getElementById("correo").value.trim();
+        if (!correo) {
+          showError("correo", "El correo es obligatorio");
+          isValid = false;
+        } else if (!validateEmail(correo)) {
+          showError("correo", "Ingresa un correo válido");
+          isValid = false;
+        }
+
+        // Validate password
+        const password = document.getElementById("password").value;
+        if (!password) {
+          showError("password", "La contraseña es obligatoria");
+          isValid = false;
+        } else if (password.length < 8) {
+          showError(
+            "password",
+            "La contraseña debe tener al menos 8 caracteres"
+          );
+          isValid = false;
+        }
+
+        // Validate confirm password
+        const confirmPassword =
+          document.getElementById("confirmPassword").value;
+        if (!confirmPassword) {
+          showError("confirmPassword", "Confirma tu contraseña");
+          isValid = false;
+        } else if (password !== confirmPassword) {
+          showError("confirmPassword", "Las contraseñas no coinciden");
+          isValid = false;
+        }
+
+        // Validate tipo usuario
+        const tipoUsuario = document.getElementById("tipoUsuario").value;
+        if (!tipoUsuario) {
+          showError("tipoUsuario", "Selecciona un tipo de usuario");
+          isValid = false;
+        }
+
+        return isValid;
+      }
+
+      // Form submission
+      document
+        .getElementById("registroForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          if (!validateForm()) {
+            return;
+          }
+
+          // Show loading state
+          const submitBtn = document.getElementById("submitBtn");
+          const btnText = document.getElementById("btnText");
+          const btnLoader = document.getElementById("btnLoader");
+
+          submitBtn.disabled = true;
+          btnText.classList.add("hidden");
+          btnLoader.classList.remove("hidden");
+
+          // Collect form data
+          const formData = {
+            nombre: document.getElementById("nombre").value.trim(),
+            correo: document.getElementById("correo").value.trim(),
+            password: document.getElementById("password").value,
+            tipoUsuario: document.getElementById("tipoUsuario").value,
+          };
+
+          try {
+            // Simulate API call
+            const response = await fetch("/registro", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(formData),
+            });
+
+            if (response.ok) {
+              // Show success message
+              const successMessage = document.getElementById("successMessage");
+              successMessage.classList.remove("hidden");
+              successMessage.classList.add("success-animation");
+
+              // Reset form
+              document.getElementById("registroForm").reset();
+
+              // Scroll to success message
+              successMessage.scrollIntoView({ behavior: "smooth" });
+            } else {
+              throw new Error("Error en el servidor");
+            }
+          } catch (error) {
+            alert("Error al registrar usuario: " + error.message);
+          } finally {
+            // Reset button state
+            submitBtn.disabled = false;
+            btnText.classList.remove("hidden");
+            btnLoader.classList.add("hidden");
+          }
+        });
+
+      // Real-time validation
+      document.getElementById("correo").addEventListener("blur", function () {
+        const correo = this.value.trim();
+        if (correo && !validateEmail(correo)) {
+          showError("correo", "Ingresa un correo válido");
+        } else if (correo) {
+          hideError("correo");
+        }
+      });
+
+      document
+        .getElementById("confirmPassword")
+        .addEventListener("input", function () {
+          const password = document.getElementById("password").value;
+          const confirmPassword = this.value;
+
+          if (confirmPassword && password !== confirmPassword) {
+            showError("confirmPassword", "Las contraseñas no coinciden");
+          } else if (confirmPassword) {
+            hideError("confirmPassword");
+          }
+        });
+    </script>
+  </body>
+</html>

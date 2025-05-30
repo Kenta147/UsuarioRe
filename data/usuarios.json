@@ -1,0 +1,34 @@
+[
+  {
+    "id": "1748573659937",
+    "nombre": "sdfgh",
+    "correo": "rusbel@gmail.com",
+    "password": "12345678",
+    "tipoUsuario": "cliente",
+    "fechaRegistro": "2025-05-30T02:54:19.937Z"
+  },
+  {
+    "id": "1748573747866",
+    "nombre": "Rusbel",
+    "correo": "rusbel123@gmail.com",
+    "password": "12345678",
+    "tipoUsuario": "cliente",
+    "fechaRegistro": "2025-05-30T02:55:47.866Z"
+  },
+  {
+    "id": "1748575069219",
+    "nombre": "sdfgh",
+    "correo": "roja@gmail.com",
+    "password": "123456789",
+    "tipoUsuario": "proveedor",
+    "fechaRegistro": "2025-05-30T03:17:49.219Z"
+  },
+  {
+    "id": "1748575650963",
+    "nombre": "asdyi",
+    "correo": "rfg@gmail.com",
+    "password": "123456789",
+    "tipoUsuario": "cliente",
+    "fechaRegistro": "2025-05-30T03:27:30.963Z"
+  }
+]
